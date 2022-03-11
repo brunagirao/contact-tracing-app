@@ -1,8 +1,23 @@
+
 # Contact Tracing App 
 
 Sample Contact Tracing app built on Salesforce Platform.
-This application the course "Salesforce Apex Development". 
-![image](https://user-images.githubusercontent.com/30693791/157859917-96b8910a-1875-4bde-b486-09133dbb8beb.png)
+
+This application is part of the course [Salesforce Apex Development](https://www.udemy.com/course/salesforce-development/).
+
+![App Screenshot](https://github.com/choudharymanish8585/contact-tracing/raw/master/screenshots/screenshots.png)
+
+#### In this project are applied: 
+
+- Web Application Architecture
+- Programming Fundamentals
+- Apex Development
+- Async Apex
+- Aura Framework Development
+- SOQL - Salesforce Object Query Language
+- SOSL - Salesforce Object Search Language
+- Database Manipulation
+- Object-Oriented Programming System
 
 
 ## How Do You Plan to Deploy Your Changes?
