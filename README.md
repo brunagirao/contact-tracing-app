@@ -1,6 +1,9 @@
-# Salesforce DX Project: Next Steps
+# Contact Tracing App 
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Sample Contact Tracing app built on Salesforce Platform.
+This application the course "Salesforce Apex Development". 
+![image](https://user-images.githubusercontent.com/30693791/157859917-96b8910a-1875-4bde-b486-09133dbb8beb.png)
+
 
 ## How Do You Plan to Deploy Your Changes?
 
