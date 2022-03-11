@@ -1,6 +1,24 @@
-# Salesforce DX Project: Next Steps
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+# Contact Tracing App 
+
+Sample Contact Tracing app built on Salesforce Platform.
+
+This application is part of the course [Salesforce Apex Development](https://www.udemy.com/course/salesforce-development/).
+
+![App Screenshot](https://github.com/choudharymanish8585/contact-tracing/raw/master/screenshots/screenshots.png)
+
+#### In this project are applied: 
+
+- Web Application Architecture
+- Programming Fundamentals
+- Apex Development
+- Async Apex
+- Aura Framework Development
+- SOQL - Salesforce Object Query Language
+- SOSL - Salesforce Object Search Language
+- Database Manipulation
+- Object-Oriented Programming System
+
 
 ## How Do You Plan to Deploy Your Changes?
 
