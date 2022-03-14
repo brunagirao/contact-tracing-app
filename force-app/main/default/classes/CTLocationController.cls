@@ -45,4 +45,32 @@ public with sharing class CTLocationController {
 
         return locations;
     }
+
+    /**
+    * Search a location by id
+    * @param locationId 
+    * @return Location__c 
+    **/
+    public static Location__c getLocationById(String locationId){
+        
+        List<Location__c> locations = new List<Location__c>();
+        Location__c location = new Location__c();
+
+        if(String.isNotBlank(locationId)) {
+
+            locations = [
+                            SELECT Id,Name, Address__c, Pincode__c, Red_Score__c, 
+                                   Status_Update_Date__c, Status__c
+                              FROM Location__c
+                             WHERE Id =: locationId
+                             LIMIT 1
+                        ];
+        }
+
+        if(!locations.isEmpty()){
+            location = locations.get(0);
+        }
+
+        return location;
+    }
 }
