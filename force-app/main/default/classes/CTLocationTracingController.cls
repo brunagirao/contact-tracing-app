@@ -35,4 +35,20 @@ public with sharing class CTLocationTracingController {
                    AND Visit_Date__c = LAST_N_DAYS:10
         ];
     }
+
+    /**
+    * Get all visitor ids for locations
+    * @param locationIds 
+    * @return List<Location_Tracing__c> 
+    **/
+    public static List<Location_Tracing__c> getLocationsByLocationsIds(Set<Id> locationIds) {
+        
+        return [
+                SELECT Id, Name, Person__c, Location__c, Visit_Date__c
+                  FROM Location_Tracing__c
+                 WHERE Location__c IN :locationIds
+                   AND Person__r.Health_Status__c = 'Green'
+                   AND Visit_Date__c = LAST_N_DAYS:10
+        ];
+    }
 }
