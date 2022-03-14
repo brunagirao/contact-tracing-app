@@ -41,7 +41,7 @@ public with sharing class CTLocationTracingController {
     * @param locationIds 
     * @return List<Location_Tracing__c> 
     **/
-    public static List<Location_Tracing__c> getLocationsByLocationsIds(Set<Id> locationIds) {
+    public static List<Location_Tracing__c> getLocationsByLocationIds(Set<Id> locationIds) {
         
         return [
                 SELECT Id, Name, Person__c, Location__c, Visit_Date__c
