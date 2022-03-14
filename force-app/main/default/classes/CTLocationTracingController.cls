@@ -57,7 +57,7 @@ public with sharing class CTLocationTracingController {
     * @param newLocationTraces 
     * @return List<Location_Tracing__c> 
     **/
-    public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> newLocationTraces){
+    public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> newLocationTraces) {
 
         //store unique person and location ids
         Set<Id> personIds   = new Set<Id>();
