@@ -107,9 +107,11 @@ public with sharing class CTPersonController {
                   FROM Person__c
               GROUP BY Health_Status__c
         ]) {
-            String healthStatus = String.valueOf(result.get('Health_Status__c'));
-            Integer quantity    = Integer.valueOf(result.get('Quantity'));
-            healthStatusCountMap.put(healthStatus, quantity);
+            
+            String status    = String.valueOf(result.get('Health_Status__c'));
+            Integer quantity = Integer.valueOf(result.get('Quantity'));
+            
+            healthStatusCountMap.put(status, quantity);
         }
 
         return healthStatusCountMap;
