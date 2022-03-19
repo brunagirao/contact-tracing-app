@@ -12,4 +12,9 @@ trigger PersonTrigger on Person__c (
     before delete, after delete, 
     after undelete) {
 
+    PersonTriggerHandler handler = new PersonTriggerHandler(
+        Trigger.new, Trigger.old,
+        Trigger.newMap, Trigger.oldMap 
+    );
+
 }
