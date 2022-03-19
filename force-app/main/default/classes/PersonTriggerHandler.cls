@@ -6,6 +6,7 @@
 -------------------------------------------------------------------------------------------
 18/03/2022           Bruna Girão         create Trigger 
 19/03/2022           Bruna Girão         create new methods
+                                         create beforeInsert and beforeUpdate methods
 ********************************************************************************************/
 public with sharing class PersonTriggerHandler {
     
@@ -44,6 +45,14 @@ public with sharing class PersonTriggerHandler {
         this.oldRecordsList = oldRecordsList; 
         this.newRecordsMap  = newRecordsMap;
         this.oldRecordsMap  = oldRecordsMap; 
+    }
+
+    public void beforeInsert() {
+        PersonHelper.validateNewPersonData(this.newRecordsList);
+    }
+
+    public void beforeUpdate() {
+        PersonHelper.updateStatusUpdateDate(this.newRecordsMap, this.oldRecordsMap);
     }
 
 }
