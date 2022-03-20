@@ -158,11 +158,11 @@ public with sharing class CTPersonController {
     * @param personIdsList 
     * @return Set<Id> 
     **/
-    public static Set<Id> getNeighborhoods(Set<Id> personIdsList) {
-        //set of status to get neighborhoods
+    public static Set<Id> getNeighbour(Set<Id> personIdsList) {
+        //set of status to get neighbour
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
-        //get the list of neighborhoods 
+        //get the list of neighbour 
         List<People_Tracing__c> peopleTracesList = [
             SELECT Id, Contact_Date__c, Contact_Type__c, 
                    Person_1__c, Person_2__c
@@ -176,7 +176,7 @@ public with sharing class CTPersonController {
 
         Set<Id> neighborhoodsSet = new Set<Id>();
 
-        //filter only the neighborhoods
+        //filter only the neighbour
         for(People_Tracing__c pt : peopleTracesList) {
             if(!personIdsList.contains(pt.Person_1__c)) {
                 neighborhoodsSet.add(pt.Person_1__c);
