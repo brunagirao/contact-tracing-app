@@ -131,8 +131,8 @@ public with sharing class CTPersonController {
             SELECT Id, Contact_Date__c, Contact_Type__c, 
                    Person_1__c, Person_2__c
               FROM People_Tracing__c
-             WHERE (Person_1__c IN: personIds 
-                OR  Person_2__c IN: personIds)
+             WHERE (Person_1__c IN: personIdsList 
+                OR  Person_2__c IN: personIdsList)
                AND Contact_Type__c = 'Cohabitant'
                AND (Person_1__r.Health_Status__c IN: healthStatusSet 
                 OR  Person_2__r.Health_Status__c IN: healthStatusSet)
@@ -142,14 +142,50 @@ public with sharing class CTPersonController {
 
         //filter only the cohabitants
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIds.contains(pt.Person_1__c)) {
+            if(!personIdsList.contains(pt.Person_1__c)) {
                 cohabitantsSet.add(pt.Person_1__c);
             }
-            if(!personIds.contains(pt.Person_2__c)) {
+            if(!personIdsList.contains(pt.Person_2__c)) {
                 cohabitantsSet.add(pt.Person_2__c);
             }
         }
 
         return cohabitantsSet;
+    }
+
+    /**
+    * Get the neighborhoods of a person list  
+    * @param personIdsList 
+    * @return Set<Id> 
+    **/
+    public static Set<Id> getNeighborhoods(Set<Id> personIdsList) {
+        //set of status to get neighborhoods
+        Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
+
+        //get the list of neighborhoods 
+        List<People_Tracing__c> peopleTracesList = [
+            SELECT Id, Contact_Date__c, Contact_Type__c, 
+                   Person_1__c, Person_2__c
+              FROM People_Tracing__c
+             WHERE (Person_1__c IN: personIdsList 
+                OR  Person_2__c IN: personIdsList)
+               AND Contact_Type__c = 'Neighbour'
+               AND (Person_1__r.Health_Status__c IN: healthStatusSet 
+                OR  Person_2__r.Health_Status__c IN: healthStatusSet)
+        ];
+
+        Set<Id> neighborhoodsSet = new Set<Id>();
+
+        //filter only the neighborhoods
+        for(People_Tracing__c pt : peopleTracesList) {
+            if(!personIdsList.contains(pt.Person_1__c)) {
+                neighborhoodsSet.add(pt.Person_1__c);
+            }
+            if(!personIdsList.contains(pt.Person_2__c)) {
+                neighborhoodsSet.add(pt.Person_2__c);
+            }
+        }
+
+        return neighborhoodsSet;
     }
 }
