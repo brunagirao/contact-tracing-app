@@ -160,7 +160,7 @@ public with sharing class CTPersonController {
     **/
     public static Set<Id> getNeighbour(Set<Id> personIdsList) {
         //set of status to get neighbour
-        Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
+        Set<String> healthStatusSet = new Set<String>{'Green'};
 
         //get the list of neighbour 
         List<People_Tracing__c> peopleTracesList = [
