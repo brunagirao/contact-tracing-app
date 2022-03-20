@@ -188,4 +188,78 @@ public with sharing class CTPersonController {
 
         return neighborhoodsSet;
     }
+
+    /**
+    * Get the primary contacts of a person list  
+    * @param personIdsList 
+    * @return Set<Id> 
+    **/
+    public static Set<Id> getPrimaryContacts(Set<Id> personIdsList) {
+        //set of status to get primary contacts
+        Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
+
+        //get the list of primary contacts
+        List<People_Tracing__c> peopleTracesList = [
+            SELECT Id, Contact_Date__c, Contact_Type__c, 
+                   Person_1__c, Person_2__c
+              FROM People_Tracing__c
+             WHERE (Person_1__c IN: personIdsList 
+                OR  Person_2__c IN: personIdsList)
+               AND Contact_Type__c = 'Other'
+               AND Contact_Date__c = LAST_N_DAYS:10
+               AND (Person_1__r.Health_Status__c IN: healthStatusSet 
+                OR  Person_2__r.Health_Status__c IN: healthStatusSet)
+        ];
+
+        Set<Id> primaryContactsSet = new Set<Id>();
+
+        //filter only the primary contacts
+        for(People_Tracing__c pt : peopleTracesList) {
+            if(!personIdsList.contains(pt.Person_1__c)) {
+                primaryContactsSet.add(pt.Person_1__c);
+            }
+            if(!personIdsList.contains(pt.Person_2__c)) {
+                primaryContactsSet.add(pt.Person_2__c);
+            }
+        }
+
+        return primaryContactsSet;
+    }
+
+    /**
+    * Get the secondary contacts of a person list  
+    * @param primaryContactsIdsList 
+    * @return Set<Id> 
+    **/
+    public static Set<Id> getSecondayContacts(Set<Id> primaryContactsIdsList) {
+        //set of status to get primary contacts
+        Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
+
+        //get the list of primary contacts
+        List<People_Tracing__c> peopleTracesList = [
+            SELECT Id, Contact_Date__c, Contact_Type__c, 
+                   Person_1__c, Person_2__c
+              FROM People_Tracing__c
+             WHERE (Person_1__c IN: primaryContactsIdsList 
+                OR  Person_2__c IN: primaryContactsIdsList)
+               AND Contact_Type__c = 'Other'
+               AND Contact_Date__c = LAST_N_DAYS:10
+               AND (Person_1__r.Health_Status__c IN: healthStatusSet 
+                OR  Person_2__r.Health_Status__c IN: healthStatusSet)
+        ];
+
+        Set<Id> secondaryContactsSet = new Set<Id>();
+
+        //filter only the primary contacts
+        for(People_Tracing__c pt : peopleTracesList) {
+            if(!primaryContactsIdsList.contains(pt.Person_1__c)) {
+                secondaryContactsSet.add(pt.Person_1__c);
+            }
+            if(!primaryContactsIdsList.contains(pt.Person_2__c)) {
+                secondaryContactsSet.add(pt.Person_2__c);
+            }
+        }
+
+        return secondaryContactsSet;
+    }
 }
