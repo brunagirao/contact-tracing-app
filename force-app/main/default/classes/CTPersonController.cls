@@ -116,4 +116,40 @@ public with sharing class CTPersonController {
 
         return healthStatusCountMap;
     }
+
+    /**
+    * Get the cohabitants of a person list  
+    * @param personIdsList 
+    * @return Set<Id> 
+    **/
+    public static Set<Id> getCohabitants(List<Id> personIdsList) {
+        //set of status to get cohabitants
+        Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
+
+        //get the list of cohabitant 
+        List<People_Tracing__c> peopleTracesList = [
+            SELECT Id, Contact_Date__c, Contact_Type__c, 
+                   Person_1__c, Person_2__c
+              FROM People_Tracing__c
+             WHERE (Person_1__c IN: personIds 
+                OR  Person_2__c IN: personIds)
+               AND Contact_Type__c = 'Cohabitant'
+               AND (Person_1__r.Health_Status__c IN: healthStatusSet 
+                OR  Person_2__r.Health_Status__c IN: healthStatusSet)
+        ];
+         
+        Set<Id> cohabitantsSet = new Set<Id>();
+
+        //filter only the cohabitants
+        for(People_Tracing__c pt : peopleTracesList) {
+            if(!personIds.contains(pt.Person_1__c)) {
+                cohabitantsSet.add(pt.Person_1__c);
+            }
+            if(!personIds.contains(pt.Person_2__c)) {
+                cohabitantsSet.add(pt.Person_2__c);
+            }
+        }
+
+        return cohabitantsSet;
+    }
 }
