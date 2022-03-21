@@ -119,10 +119,10 @@ public with sharing class CTPersonController {
 
     /**
     * Get the cohabitants of a person list  
-    * @param personIdsList 
+    * @param personIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getCohabitants(List<Id> personIdsList) {
+    public static Set<Id> getCohabitants(Set<Id> personIds) {
         //set of status to get cohabitants
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
@@ -131,70 +131,70 @@ public with sharing class CTPersonController {
             SELECT Id, Contact_Date__c, Contact_Type__c, 
                    Person_1__c, Person_2__c
               FROM People_Tracing__c
-             WHERE (Person_1__c IN: personIdsList 
-                OR  Person_2__c IN: personIdsList)
+             WHERE (Person_1__c IN: personIds 
+                OR  Person_2__c IN: personIds)
                AND Contact_Type__c = 'Cohabitant'
                AND (Person_1__r.Health_Status__c IN: healthStatusSet 
                 OR  Person_2__r.Health_Status__c IN: healthStatusSet)
         ];
          
-        Set<Id> cohabitantsSet = new Set<Id>();
+        Set<Id> cohabitants = new Set<Id>();
 
         //filter only the cohabitants
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIdsList.contains(pt.Person_1__c)) {
-                cohabitantsSet.add(pt.Person_1__c);
+            if(!personIds.contains(pt.Person_1__c)) {
+                cohabitants.add(pt.Person_1__c);
             }
-            if(!personIdsList.contains(pt.Person_2__c)) {
-                cohabitantsSet.add(pt.Person_2__c);
+            if(!personIds.contains(pt.Person_2__c)) {
+                cohabitants.add(pt.Person_2__c);
             }
         }
 
-        return cohabitantsSet;
+        return cohabitants;
     }
 
     /**
     * Get the neighborhoods of a person list  
-    * @param personIdsList 
+    * @param personIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getNeighbour(Set<Id> personIdsList) {
-        //set of status to get neighbour
+    public static Set<Id> getNeighbours(Set<Id> personIds) {
+        //set of status to get neighbours
         Set<String> healthStatusSet = new Set<String>{'Green'};
 
-        //get the list of neighbour 
+        //get the list of neighbours 
         List<People_Tracing__c> peopleTracesList = [
             SELECT Id, Contact_Date__c, Contact_Type__c, 
                    Person_1__c, Person_2__c
               FROM People_Tracing__c
-             WHERE (Person_1__c IN: personIdsList 
-                OR  Person_2__c IN: personIdsList)
+             WHERE (Person_1__c IN: personIds 
+                OR  Person_2__c IN: personIds)
                AND Contact_Type__c = 'Neighbour'
                AND (Person_1__r.Health_Status__c IN: healthStatusSet 
                 OR  Person_2__r.Health_Status__c IN: healthStatusSet)
         ];
 
-        Set<Id> neighborhoodsSet = new Set<Id>();
+        Set<Id> neighbours = new Set<Id>();
 
-        //filter only the neighbour
+        //filter only the neighbours
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIdsList.contains(pt.Person_1__c)) {
-                neighborhoodsSet.add(pt.Person_1__c);
+            if(!personIds.contains(pt.Person_1__c)) {
+                neighbours.add(pt.Person_1__c);
             }
-            if(!personIdsList.contains(pt.Person_2__c)) {
-                neighborhoodsSet.add(pt.Person_2__c);
+            if(!personIds.contains(pt.Person_2__c)) {
+                neighbours.add(pt.Person_2__c);
             }
         }
 
-        return neighborhoodsSet;
+        return neighbours;
     }
 
     /**
     * Get the primary contacts of a person list  
-    * @param personIdsList 
+    * @param personIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getPrimaryContacts(Set<Id> personIdsList) {
+    public static Set<Id> getPrimaryContacts(Set<Id> personIds) {
         //set of status to get primary contacts
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
@@ -203,35 +203,35 @@ public with sharing class CTPersonController {
             SELECT Id, Contact_Date__c, Contact_Type__c, 
                    Person_1__c, Person_2__c
               FROM People_Tracing__c
-             WHERE (Person_1__c IN: personIdsList 
-                OR  Person_2__c IN: personIdsList)
+             WHERE (Person_1__c IN: personIds 
+                OR  Person_2__c IN: personIds)
                AND Contact_Type__c = 'Other'
                AND Contact_Date__c = LAST_N_DAYS:10
                AND (Person_1__r.Health_Status__c IN: healthStatusSet 
                 OR  Person_2__r.Health_Status__c IN: healthStatusSet)
         ];
 
-        Set<Id> primaryContactsSet = new Set<Id>();
+        Set<Id> primaryContacts = new Set<Id>();
 
         //filter only the primary contacts
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIdsList.contains(pt.Person_1__c)) {
-                primaryContactsSet.add(pt.Person_1__c);
+            if(!personIds.contains(pt.Person_1__c)) {
+                primaryContacts.add(pt.Person_1__c);
             }
-            if(!personIdsList.contains(pt.Person_2__c)) {
-                primaryContactsSet.add(pt.Person_2__c);
+            if(!personIds.contains(pt.Person_2__c)) {
+                primaryContacts.add(pt.Person_2__c);
             }
         }
 
-        return primaryContactsSet;
+        return primaryContacts;
     }
 
     /**
     * Get the secondary contacts of a person list  
-    * @param primaryContactsIdsList 
+    * @param primaryContactsIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getSecondayContacts(Set<Id> primaryContactsIdsList) {
+    public static Set<Id> getSecondaryContacts(Set<Id> primaryContactsIds) {
         //set of status to get primary contacts
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
@@ -240,26 +240,26 @@ public with sharing class CTPersonController {
             SELECT Id, Contact_Date__c, Contact_Type__c, 
                    Person_1__c, Person_2__c
               FROM People_Tracing__c
-             WHERE (Person_1__c IN: primaryContactsIdsList 
-                OR  Person_2__c IN: primaryContactsIdsList)
+             WHERE (Person_1__c IN: primaryContactsIds 
+                OR  Person_2__c IN: primaryContactsIds)
                AND Contact_Type__c = 'Other'
                AND Contact_Date__c = LAST_N_DAYS:10
                AND (Person_1__r.Health_Status__c IN: healthStatusSet 
                 OR  Person_2__r.Health_Status__c IN: healthStatusSet)
         ];
 
-        Set<Id> secondaryContactsSet = new Set<Id>();
+        Set<Id> secondaryContacts = new Set<Id>();
 
         //filter only the primary contacts
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!primaryContactsIdsList.contains(pt.Person_1__c)) {
-                secondaryContactsSet.add(pt.Person_1__c);
+            if(!primaryContactsIds.contains(pt.Person_1__c)) {
+                secondaryContacts.add(pt.Person_1__c);
             }
-            if(!primaryContactsIdsList.contains(pt.Person_2__c)) {
-                secondaryContactsSet.add(pt.Person_2__c);
+            if(!primaryContactsIds.contains(pt.Person_2__c)) {
+                secondaryContacts.add(pt.Person_2__c);
             }
         }
 
-        return secondaryContactsSet;
+        return secondaryContacts;
     }
 }
