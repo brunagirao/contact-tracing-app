@@ -4,7 +4,7 @@
 * Author    : Bruna Girão
 * Date      : 22/03/2022
 -------------------------------------------------------------------------------------------
-22/03/2022           Bruna Girão         create Trigger 
+22/03/2022           Bruna Girão         create class 
 ********************************************************************************************/
 public with sharing class LocationTriggerHandler {
     
@@ -45,5 +45,12 @@ public with sharing class LocationTriggerHandler {
         this.oldRecordsMap  = oldRecordsMap;
     }
 
+    public void beforeInsert() {
+        LocationHelper.validateNewLocationData(this.newRecordsList);
+    }
+
+    public void beforeUpdate() {
+        LocationHelper.updateStatudUpdateDate(this.newRecordsMap, this.oldRecordsMap);
+    }
     
 }
