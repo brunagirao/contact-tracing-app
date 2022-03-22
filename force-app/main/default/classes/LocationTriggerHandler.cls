@@ -19,7 +19,7 @@ public with sharing class LocationTriggerHandler {
         runTrigger = true;
     }
 
-    public static Boolean isTriggerEnable() {
+    public static Boolean isTriggerEnabled() {
         return runTrigger;
     }
 
