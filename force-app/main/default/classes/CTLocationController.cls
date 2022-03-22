@@ -97,4 +97,58 @@ public with sharing class CTLocationController {
 
         return healthStatusCountMap;
     }
+
+    /**
+    * Update the RedScore and Status locations
+    * @param locationIds 
+    **/
+    public static void updateRedScore(Set<Id> locationIds) {
+
+        List<Location__c> locationsToUpdate = new List<Location__c>();
+        //get the location and total of people in red status 
+        List<AggregateResult> redPeoplePerLocation = [
+            SELECT Location__c, COUNT(Id) Total 
+              FROM Location_Tracing__c
+             WHERE Location__c IN :locationIds
+               AND Person__r.Health_Status__c = 'Red'
+               AND Visit_Date__c = LAST_N_DAYS :10
+          GROUP BY Location__c 
+        ];
+
+        //get the total of people, location status information
+        for(AggregateResult result : redPeoplePerLocation) {
+            String locationId     = String.valueOf(result.get('Location__c'));
+            Integer redScore      = Integer.valueOf(result.get('Total'));
+            String locationStatus = getLocationStatus(redScore);
+            //add the location information 
+            locationsToUpdate.add(new Location__c(
+                Id           = locationId, 
+                Red_Score__c = redScore, 
+                Status__c    = locationStatus)
+            );
+        }
+        //update the locations
+        if(!locationsToUpdate.isEmpty()) {
+            update locationsToUpdate;
+        }
+
+    }
+
+    /**
+    * Return the location status based on the redScore value
+    * @param redScore 
+    * @return String 
+    **/
+    public static String getLocationStatus(Integer redScore) {
+
+        if(redScore == 0) {
+            return 'Green';
+        } else if (redScore <= 5) {
+            return 'Yellow';
+        } else if (redScore <= 10) {
+            return 'Orange';
+        } else {
+            return 'Red';
+        }
+    }
 }
