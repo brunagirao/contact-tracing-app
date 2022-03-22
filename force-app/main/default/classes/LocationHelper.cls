@@ -22,12 +22,12 @@ public with sharing class LocationHelper {
         }
     }
 
-      /**
+    /**
     * Update the Status_Update_Date__c when the Status__c change
     * @param newRecordsMap 
     * @param oldRecordsMap 
     **/
-    public static void updateStatudUpdateDate(Map<Id,Location__c> newRecordsMap, Map<Id,Location__c> oldRecordsMap) {
+    public static void updateStatusUpdateDate(Map<Id,Location__c> newRecordsMap, Map<Id,Location__c> oldRecordsMap) {
 
         for(Id key : newRecordsMap.keySet()){
             //get the old and new location
@@ -40,6 +40,54 @@ public with sharing class LocationHelper {
                 newLocation.Status_Update_Date__c = Date.today();
             }
         }
+    }
+
+    /**
+    * Get all the location traces with red status and that have visited by people in the last 10 days
+    * and update the health status people to yellow
+    * @param newRecordsList 
+    **/
+    public static void updatePeopleToYellowStatus(List<Location__c> newRecordsList) {
+
+        Set<Id> locationsId = new Set<Id>();
+        
+        for(Location__c location : newRecordsList) {
+            //add the location with red status
+            if(location.Status__c == 'Red') {
+                locationsId.add(location.Id);
+            }
+        }
+
+        //get all the location traces with have visited by people in the last 10 days
+        List<Location_Tracing__c> locationTraces = CTLocationTracingController.getLocationsByLocationIds(locationsId);
+        
+        if(locationTraces != null && !locationTraces.isEmpty()) {
+
+            Set<Id> personIds = new Set<Id>();
+            //add all persons id that visited the locations
+            for(Location_Tracing__c lt : locationTraces) {
+                personIds.add(lt.Person__c);
+            }
+
+            if(!personIds.isEmpty()) {
+
+                List<Person__c> peopleToUpdate = new List<Person__c>();
+                //change all the people with the yellow status
+                for(Id personId : personIds) {
+                    peopleToUpdate.add( 
+                        new Person__c(
+                            Id = personId,
+                            Health_Status__c = 'Yellow'
+                        )
+                    );
+                }
+                //update the people to yellow status
+                if(!peopleToUpdate.isEmpty()) {
+                    update peopleToUpdate;
+                }
+            }
+        }
+
     }
 
 }
