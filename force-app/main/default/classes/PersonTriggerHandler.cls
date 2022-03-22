@@ -55,4 +55,21 @@ public with sharing class PersonTriggerHandler {
         PersonHelper.updateStatusUpdateDate(this.newRecordsMap, this.oldRecordsMap);
     }
 
+    public void afterUpdate() {
+        Set<Id> personIds = PersonHelper.updateHealthStatus(this.newRecordsMap, this.oldRecordsMap);
+        
+        List<Location_Tracing__c> locationTraces = CTLocationTracingController.getLocationsByPersonIds(personIds);
+
+        if(locationTraces != null && !locationTraces.isEmpty()) {
+            Set<Id> locationIds = new Set<Id>();
+            
+            for(Location_Tracing__c lt : locationTraces) {
+                locationIds.add(lt.Location__c);
+            }
+
+            CTLocationController.updateRedScore(locationIds);
+        }
+        
+    }
+
 }
