@@ -50,7 +50,11 @@ public with sharing class LocationTriggerHandler {
     }
 
     public void beforeUpdate() {
-        LocationHelper.updateStatudUpdateDate(this.newRecordsMap, this.oldRecordsMap);
+        LocationHelper.updateStatusUpdateDate(this.newRecordsMap, this.oldRecordsMap);
+    }
+
+    public void afterUpdate() {
+        LocationHelper.updatePeopleToYellowStatus(this.newRecordsList);
     }
     
 }
