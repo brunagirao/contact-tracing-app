@@ -10,4 +10,18 @@ trigger LocationTrigger on Location__c (
     before insert, before update, 
     after insert, after update) {
 
+    
+    LocationTriggerHandler handler = new LocationTriggerHandler(
+        Trigger.new, Trigger.old,
+        Trigger.newMap, Trigger.oldMap
+    );
+
+    switch on Trigger.operationType {
+        when BEFORE_INSERT {
+            handler.beforeInsert();
+        }
+        when BEFORE_UPDATE {
+            handler.beforeUpdate();
+        }
+    }
 }
