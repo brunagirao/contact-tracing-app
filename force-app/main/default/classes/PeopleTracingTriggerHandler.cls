@@ -45,4 +45,8 @@ public with sharing class PeopleTracingTriggerHandler {
         this.newRecordsMap  = newRecordsMap;
         this.oldRecordsMap  = oldRecordsMap;
     }
+
+    public void beforeInsert() {
+        PeopleTracingHelper.checkDuplicates(this.newRecordsList);
+    }
 }
