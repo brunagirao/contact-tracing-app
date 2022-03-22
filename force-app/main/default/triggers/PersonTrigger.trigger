@@ -29,9 +29,10 @@ trigger PersonTrigger on Person__c (
             handler.beforeUpdate();
         }
 
-        when else {
-            
+        when AFTER_UPDATE {
+            handler.afterUpdate();
         }
+
     }
 
 }
