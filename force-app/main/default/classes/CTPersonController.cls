@@ -122,7 +122,7 @@ public with sharing class CTPersonController {
     * @param personIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getCohabitants(Set<Id> personIds) {
+    public static Set<Id> getCohabitants(Set<Id> personIds, Set<Id> peopleAlreadyProcessed) {
         //set of status to get cohabitants
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
@@ -142,11 +142,13 @@ public with sharing class CTPersonController {
 
         //filter only the cohabitants
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIds.contains(pt.Person_1__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_1__c)) {
                 cohabitants.add(pt.Person_1__c);
+                peopleAlreadyProcessed.add(pt.Person_1__c);
             }
-            if(!personIds.contains(pt.Person_2__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_2__c)) {
                 cohabitants.add(pt.Person_2__c);
+                peopleAlreadyProcessed.add(pt.Person_2__c);
             }
         }
 
@@ -158,7 +160,7 @@ public with sharing class CTPersonController {
     * @param personIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getNeighbours(Set<Id> personIds) {
+    public static Set<Id> getNeighbours(Set<Id> personIds, Set<Id> peopleAlreadyProcessed) {
         //set of status to get neighbours
         Set<String> healthStatusSet = new Set<String>{'Green'};
 
@@ -178,11 +180,13 @@ public with sharing class CTPersonController {
 
         //filter only the neighbours
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIds.contains(pt.Person_1__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_1__c)) {
                 neighbours.add(pt.Person_1__c);
+                peopleAlreadyProcessed.add(pt.Person_1__c);
             }
-            if(!personIds.contains(pt.Person_2__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_2__c)) {
                 neighbours.add(pt.Person_2__c);
+                peopleAlreadyProcessed.add(pt.Person_2__c);
             }
         }
 
@@ -194,7 +198,7 @@ public with sharing class CTPersonController {
     * @param personIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getPrimaryContacts(Set<Id> personIds) {
+    public static Set<Id> getPrimaryContacts(Set<Id> personIds, Set<Id> peopleAlreadyProcessed) {
         //set of status to get primary contacts
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
@@ -215,11 +219,13 @@ public with sharing class CTPersonController {
 
         //filter only the primary contacts
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!personIds.contains(pt.Person_1__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_1__c)) {
                 primaryContacts.add(pt.Person_1__c);
+                peopleAlreadyProcessed.add(pt.Person_1__c);
             }
-            if(!personIds.contains(pt.Person_2__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_2__c)) {
                 primaryContacts.add(pt.Person_2__c);
+                peopleAlreadyProcessed.add(pt.Person_2__c);
             }
         }
 
@@ -231,7 +237,7 @@ public with sharing class CTPersonController {
     * @param primaryContactsIds 
     * @return Set<Id> 
     **/
-    public static Set<Id> getSecondaryContacts(Set<Id> primaryContactsIds) {
+    public static Set<Id> getSecondaryContacts(Set<Id> primaryContactsIds, Set<Id> peopleAlreadyProcessed) {
         //set of status to get primary contacts
         Set<String> healthStatusSet = new Set<String>{'Green', 'Yellow'};
 
@@ -252,11 +258,13 @@ public with sharing class CTPersonController {
 
         //filter only the primary contacts
         for(People_Tracing__c pt : peopleTracesList) {
-            if(!primaryContactsIds.contains(pt.Person_1__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_1__c)) {
                 secondaryContacts.add(pt.Person_1__c);
+                peopleAlreadyProcessed.add(pt.Person_1__c);
             }
-            if(!primaryContactsIds.contains(pt.Person_2__c)) {
+            if(!peopleAlreadyProcessed.contains(pt.Person_2__c)) {
                 secondaryContacts.add(pt.Person_2__c);
+                peopleAlreadyProcessed.add(pt.Person_2__c);
             }
         }
 
