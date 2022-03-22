@@ -20,8 +20,13 @@ trigger LocationTrigger on Location__c (
         when BEFORE_INSERT {
             handler.beforeInsert();
         }
+
         when BEFORE_UPDATE {
             handler.beforeUpdate();
+        }
+
+        when AFTER_UPDATE {
+            handler.afterUpdate();
         }
     }
 }
