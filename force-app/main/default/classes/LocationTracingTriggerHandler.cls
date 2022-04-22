@@ -45,4 +45,8 @@ public with sharing class LocationTracingTriggerHandler {
         this.newRecordsMap  = newRecordsMap;
         this.oldRecordsMap  = oldRecordsMap;
     }
+
+    public void beforeInsert() {
+        LocationTracingHelper.checkDuplicates(this.newRecordsList);
+    }
 }

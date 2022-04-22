@@ -8,4 +8,14 @@
 ***************************************************************************************************/
 trigger LocationTracingTrigger on Location_Tracing__c (before insert, after insert) {
 
+    LocationTracingTriggerHandler handler = new LocationTracingTriggerHandler (
+        Trigger.new, Trigger.old,
+        Trigger.newMap, Trigger.oldMap
+    );
+
+    switch on Trigger.operationType {
+        when BEFORE_INSERT {
+            handler.beforeInsert();
+        }
+    }
 }
