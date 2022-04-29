@@ -29,7 +29,7 @@
                     <div class="slds-page-header__control">
                         <ul class="slds-button-group-list">
                             <li>
-                                <button class="slds-button slds-button_neutral">Add New</button>
+                                <button class="slds-button slds-button_neutral" onclick="{!c.createRecord}">Add New</button>
                             </li>
                         </ul>
                     </div>
