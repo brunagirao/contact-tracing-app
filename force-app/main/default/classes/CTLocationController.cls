@@ -78,7 +78,7 @@ public with sharing class CTLocationController {
      * Get count of location in each health status
      * @return Map<String, Integer>
     */
-    public static Map<String,Integer> getStatusCount() {
+    public static Map<String,Integer> getHealthStatusCount() {
 
         Map<String,Integer> healthStatusCountMap = new Map<String,Integer>();
 
