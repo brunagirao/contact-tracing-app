@@ -1,7 +1,11 @@
-<aura:component>
+<aura:component controller="CTHealthHeaderController">
     <aura:attribute name="headerTitle" type="String" default="Person View"/>
     <aura:attribute name="scope" type="String" default="person"/>
+    <aura:attribute name="count" type="Object" default="" />
 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="fetchCount" action="{!c.doInit}"/>
+    
     <div class="slds-page-header slds-page-header_record-home">
         <div class="slds-page-header__row">
             <div class="slds-page-header__col-title">
@@ -41,19 +45,47 @@
                 <ul class="slds-page-header__detail-row">
                     <li class="slds-page-header__detail-block">
                         <div class="header-item green" title="Green">Green</div>
-                        <div class="header-item green" title="">23</div>
+                        <div class="header-item green" title="">
+                            <aura:if isTrue="{!v.count.Green}">
+                                {!v.count.Green}
+                                <aura:set attribute="else">
+                                    0
+                                </aura:set>
+                            </aura:if>
+                        </div>
                     </li>
                     <li class="slds-page-header__detail-block">
                         <div class="header-item yellow" title="Yellow">Yellow</div>
-                        <div class="header-item yellow" title="">12</div>
+                        <div class="header-item yellow" title="">
+                            <aura:if isTrue="{!v.count.Yellow}">
+                                {!v.count.Yellow}
+                                <aura:set attribute="else">
+                                    0
+                                </aura:set>
+                            </aura:if>
+                        </div>
                     </li>
                     <li class="slds-page-header__detail-block">
                         <div class="header-item orange" title="Orange">Orange</div>
-                        <div class="header-item orange" title="">64</div>
+                        <div class="header-item orange" title="">
+                            <aura:if isTrue="{!v.count.Orange}">
+                                {!v.count.Orange}
+                                <aura:set attribute="else">
+                                    0
+                                </aura:set>
+                            </aura:if>
+                        </div>
                     </li>
                     <li class="slds-page-header__detail-block">
                         <div class="header-item red" title="Red">Red</div>
-                        <div class="header-item red" title="">3</div>
+                        <div class="header-item red" title="">
+                            <aura:if isTrue="{!v.count.Red}">
+                                {!v.count.Red}
+                                <aura:set attribute="else">
+                                    0
+                                </aura:set>
+                            </aura:if>
+                        </div>
                     </li>
                 </ul>
             </div>

@@ -9,5 +9,7 @@
         }
         
         component.set("v.scope", selectedTabId);
+        let healthHeaderComp = component.find("health-header");
+        healthHeaderComp.fetchCount(component);
     }
 })
