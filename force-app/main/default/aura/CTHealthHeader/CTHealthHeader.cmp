@@ -38,20 +38,20 @@
             <div class="slds-page-header__col-details">
                 <ul class="slds-page-header__detail-row">
                     <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Green">Green</div>
-                        <div class="" title="">23</div>
+                        <div class="header-item green" title="Green">Green</div>
+                        <div class="header-item green" title="">23</div>
                     </li>
                     <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Yellow">Yellow</div>
-                        <div class="" title="">12</div>
+                        <div class="header-item yellow" title="Yellow">Yellow</div>
+                        <div class="header-item yellow" title="">12</div>
                     </li>
                     <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Orange">Orange</div>
-                        <div class="" title="">64</div>
+                        <div class="header-item orange" title="Orange">Orange</div>
+                        <div class="header-item orange" title="">64</div>
                     </li>
                     <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Red">Red</div>
-                        <div class="" title="">3</div>
+                        <div class="header-item red" title="Red">Red</div>
+                        <div class="header-item red" title="">3</div>
                     </li>
                 </ul>
             </div>
