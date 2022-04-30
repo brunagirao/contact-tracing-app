@@ -9,7 +9,7 @@ public with sharing class CTLocationController {
      * Get 100 locations with recent status change
      * @return List<Location__c>
      */
-    public static List<Location__c> getRecentStatusChange() {
+    public static List<Location__c> getRecentStatusChanges() {
 
         return [
                 SELECT Id,Name, Address__c, Pincode__c, Red_Score__c, 
