@@ -23,5 +23,18 @@
         }
 
         helper.fetchRecentHealthChanges(component);
+    },
+
+    handleKeyUp: function (component, event, helper) {
+        let isEnterKey = event.keyCode === 13;
+        var queryTerm = component.find("enter-search").get("v.value");
+        if (!queryTerm) {
+            component.set("v.data", component.get("v.initialResponse"));  
+        } 
+        if (isEnterKey) {
+            component.set("v.issearching", true);
+            helper.searchRecords(component, queryTerm);
+        }  
+        
     }
 })
