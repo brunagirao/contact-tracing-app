@@ -14,7 +14,14 @@
                         <c:CTRecentChanges scope="person"/>
                     </lightning:tab>
                     <lightning:tab label="Location View" id="location">
-                        <c:CTRecentChanges scope="location"/>
+                        <lightning:layout>
+                            <lightning:layoutItem size="8">
+                                <c:CTRecentChanges scope="location"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4">
+                                <c:CTLocationView/>
+                            </lightning:layoutItem>
+                        </lightning:layout>
                     </lightning:tab>
                 </lightning:tabset>
             </lightning:layoutItem>
