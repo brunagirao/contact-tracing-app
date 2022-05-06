@@ -20,8 +20,9 @@ public with sharing class CTPeopleTracingController {
                 SELECT Id, Name, Contact_Date__c, Contact_Type__c, 
                        Person_1__c, Person_2__c
                   FROM People_Tracing__c
-                 WHERE Person_1__c = :recordId
-                    OR Person_2__c = :recordId
+                 WHERE (Person_1__c = :recordId
+                    OR Person_2__c = :recordId)
+                   AND Contact_Date__c = LAST_N_DAYS:30
               ORDER BY Contact_Date__c DESC
             ];
         }
