@@ -18,13 +18,16 @@ public with sharing class CTLocationTabController {
                 List<VisitorInfo> vistorsInfo = new List<VisitorInfo>();
                 for(Location_Tracing__c visitor : visitors) {
                     VisitorInfo vistorInfo  = new VisitorInfo();
-                    vistorInfo.healthStatus = visitor.Person__r.Health_Status__c;
+                    vistorInfo.id           = visitor.Person__c;
+                    vistorInfo.status       = visitor.Person__r.Health_Status__c;
                     vistorInfo.token        = visitor.Person__r.Token__c;
                     vistorInfo.visitDate    = visitor.Visit_Date__c;
 
                     vistorsInfo.add(vistorInfo);
                 }
                 info.vistorsInfo = vistorsInfo;
+                info.vistorsInfoCount = vistorsInfo.size();
+                System.debug('info.vistorsInfo  => ' + info.vistorsInfo );
             }
             return info;
         } catch (Exception e) {
@@ -47,14 +50,19 @@ public with sharing class CTLocationTabController {
         public String status;
         @AuraEnabled
         public List<VisitorInfo> vistorsInfo;
+        @AuraEnabled
+        public Integer vistorsInfoCount = 0;
+
     }
 
     public class VisitorInfo {
         @AuraEnabled
-        public String healthStatus; 
+        public String id; 
+        @AuraEnabled
+        public String status; 
         @AuraEnabled
         public String token;
         @AuraEnabled
-        public Date visitDate;
+        public Date visitDate;  
     }
 }
