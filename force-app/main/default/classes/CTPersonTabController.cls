@@ -4,6 +4,7 @@ public with sharing class CTPersonTabController {
     public static UserInfo getPersonDetails(String personId){
         try {
             Person__c person = CTPersonController.getPersonById(personId);
+            System.debug('person => ' + JSON.serializePretty(person));
             UserInfo info = new UserInfo();
             if(person != null) {
                 info.name               = person.Name;
@@ -14,6 +15,7 @@ public with sharing class CTPersonTabController {
             }
 
             List<People_Tracing__c> traces = CTPeopleTracingController.getTraces(personId);
+            System.debug('traces => ' + JSON.serializePretty(traces));
             if(traces != null && traces.size() > 0) {
 
                 List<UserInfoContacts> contacts = new List<UserInfoContacts>();
@@ -39,6 +41,8 @@ public with sharing class CTPersonTabController {
                 }
                 info.contacts       = contacts;
                 info.contactCount   = contacts.size();
+                System.debug('info.contacts => ' + JSON.serializePretty(info.contacts));
+                System.debug('info.contactCount => ' +  info.contactCount);
             }
 
             return info;
